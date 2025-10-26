@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Web</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="calculator">
+    <h2>Calculadora Básica</h2>
+    <input type="text" id="display" readonly>
+
+    <div class="buttons">
+      <!-- Primera fila -->
+      <button class="btn operator" id="clear">C</button>
+      <button class="btn operator">÷</button>
+      <button class="btn operator">×</button>
+      <button class="btn operator">−</button>
+
+      <!-- Segunda fila -->
+      <button class="btn">7</button>
+      <button class="btn">8</button>
+      <button class="btn">9</button>
+      <button class="btn operator">+</button>
+
+      <!-- Tercera fila -->
+      <button class="btn">4</button>
+      <button class="btn">5</button>
+      <button class="btn">6</button>
+      <button class="btn operator" id="equal">=</button>
+
+      <!-- Cuarta fila -->
+      <button class="btn">1</button>
+      <button class="btn">2</button>
+      <button class="btn">3</button>
+
+      <!-- Quinta fila -->
+      <button class="btn zero">0</button>
+      <button class="btn">.</button>
+    </div>
+  </div>
+
+  <!-- 🔹 JAVASCRIPT INCORPORADO -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const display = document.getElementById("display");
+      const buttons = document.querySelectorAll(".btn");
+
+      let currentInput = "";
+
+      buttons.forEach(button => {
+        button.addEventListener("click", () => {
+          const value = button.textContent;
+
+          // Limpiar pantalla
+          if (value === "C") {
+            currentInput = "";
+            display.value = "";
+            return;
+          }
+
+          // Calcular resultado
+          if (value === "=") {
+            try {
+              let expression = currentInput
+                .replace(/×/g, "*")
+                .replace(/÷/g, "/")
+                .replace(/−/g, "-");
+
+              let result = eval(expression);
+              display.value = result;
+              currentInput = result.toString();
+            } catch {
+              display.value = "Error";
+              currentInput = "";
+            }
+            return;
+          }
+
+          // Mostrar números y operadores
+          currentInput += value;
+          display.value = currentInput;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
